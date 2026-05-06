@@ -1,0 +1,260 @@
+/* ============================================================================
+   Diagnostics.ai — Design tokens
+   ----------------------------------------------------------------------------
+   Two coexisting surfaces:
+     • Marketing / investor brand (dark hero surfaces, Satoshi, cyan primary)
+     • pcr.ai product UI (light + dark modes)
+   All real values live here; everything else should reference these vars.
+   ============================================================================ */
+
+/* ----- Fonts -------------------------------------------------------------- */
+@font-face {
+  font-family: "Satoshi";
+  src: url("../fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("../fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* =========================================================================
+     BRAND PALETTE  — shared across marketing and product
+     ========================================================================= */
+
+  /* Cyan — primary brand accent. Used for logotype dot, CTAs, chart selection,
+     sparkline, product sidebar active state. */
+  --brand-cyan-50:  #E7FBFF;
+  --brand-cyan-100: #BFF3FE;
+  --brand-cyan-300: #5FDCFC;
+  --brand-cyan-500: #0ACFFE;   /* PRIMARY */
+  --brand-cyan-600: #00A6D4;
+  --brand-cyan-700: #0080A8;
+
+  /* Teal — dark brand surface. Marketing heroes, deck backgrounds,
+     product dark-mode header. */
+  --brand-teal-950: #021F2C;   /* deepest */
+  --brand-teal-900: #0B2A3A;
+  --brand-teal-800: #12394C;
+  --brand-teal-700: #1C4E66;
+  --brand-teal-600: #286B89;
+
+  /* Neutrals */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F8FAFB;
+  --neutral-100: #EEF2F4;
+  --neutral-200: #DDE4E8;
+  --neutral-300: #C3CED4;
+  --neutral-400: #8FA0A9;
+  --neutral-500: #5F727C;
+  --neutral-600: #3F525C;
+  --neutral-700: #29383F;
+  --neutral-800: #17232A;
+  --neutral-900: #0B1620;
+
+  /* Semantic — aligned to pcr.ai product + marketing */
+  --status-success:  #2FA365;   /* Westgard "in control" green when desaturated */
+  --status-success-deep: #1E6B42;
+  --status-warning:  #D1A51B;   /* Westgard 2SD zone */
+  --status-danger:   #E23B3B;   /* Westgard 3SD zone + red notification badge */
+  --status-danger-deep: #6E1A1A;
+  --status-info:     var(--brand-cyan-500);
+
+  /* Westgard chart zone colors (sampled from Figma) */
+  --chart-zone-pass:    #1F5E3D;
+  --chart-zone-warn:    #A8961D;
+  --chart-zone-fail:    #651F24;
+  --chart-line:         #FFFFFF;
+  --chart-grid:         #274452;
+  --chart-surface:      #0F3548;
+
+  /* =========================================================================
+     TYPOGRAPHY
+     ========================================================================= */
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Scale — marketing-led. Product UI uses the smaller end heavily. */
+  --fs-display:  clamp(48px, 6vw, 88px);  /* deck hero */
+  --fs-h1:       56px;
+  --fs-h2:       40px;
+  --fs-h3:       28px;
+  --fs-h4:       22px;
+  --fs-lead:     20px;
+  --fs-body:     16px;
+  --fs-small:    14px;
+  --fs-micro:    12px;
+
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.45;
+  --lh-relaxed: 1.6;
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    700;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:  0.08em;
+  --tracking-caps:  0.14em;
+
+  /* =========================================================================
+     SPACING / RADIUS / SHADOW
+     ========================================================================= */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(7, 24, 34, 0.06), 0 1px 1px rgba(7, 24, 34, 0.04);
+  --shadow-md: 0 4px 12px rgba(7, 24, 34, 0.08), 0 1px 2px rgba(7, 24, 34, 0.04);
+  --shadow-lg: 0 12px 32px rgba(7, 24, 34, 0.12), 0 2px 6px rgba(7, 24, 34, 0.06);
+  --shadow-glow-cyan: 0 0 0 4px rgba(10, 207, 254, 0.18);
+
+  /* =========================================================================
+     PRODUCT — LIGHT MODE (pcr.ai default)
+     Map semantic roles to the palette above.
+     ========================================================================= */
+  --ui-bg:              var(--neutral-0);
+  --ui-surface:         var(--neutral-0);
+  --ui-surface-raised:  var(--neutral-50);
+  --ui-sidebar-bg:      var(--neutral-0);
+  --ui-header-bg:       var(--neutral-0);
+  --ui-border:          var(--neutral-200);
+  --ui-border-strong:   var(--neutral-300);
+  --ui-divider:         var(--neutral-100);
+
+  --ui-text:            var(--neutral-900);
+  --ui-text-muted:      var(--neutral-500);
+  --ui-text-heading:    var(--brand-teal-700); /* teal H1s in product */
+  --ui-link:            var(--brand-cyan-600);
+
+  --ui-accent:          var(--brand-cyan-500);
+  --ui-accent-hover:    var(--brand-cyan-600);
+  --ui-accent-weak:     var(--brand-cyan-50);
+
+  --ui-row-alt:         var(--neutral-50);
+  --ui-row-hover:       var(--brand-cyan-50);
+}
+
+/* =========================================================================
+   PRODUCT — DARK MODE
+   Scope with [data-theme="dark"] on a product-UI container.
+   ========================================================================= */
+[data-theme="dark"] {
+  --ui-bg:              var(--brand-teal-950);
+  --ui-surface:         var(--brand-teal-900);
+  --ui-surface-raised:  var(--brand-teal-800);
+  --ui-sidebar-bg:      var(--brand-teal-950);
+  --ui-header-bg:       var(--brand-teal-950);
+  --ui-border:          var(--brand-teal-700);
+  --ui-border-strong:   var(--brand-teal-600);
+  --ui-divider:         var(--brand-teal-800);
+
+  --ui-text:            var(--neutral-50);
+  --ui-text-muted:      #8FA9B5;
+  --ui-text-heading:    var(--neutral-0);
+  --ui-link:            var(--brand-cyan-300);
+
+  --ui-accent:          var(--brand-cyan-500);
+  --ui-accent-hover:    var(--brand-cyan-300);
+  --ui-accent-weak:     rgba(10, 207, 254, 0.12);
+
+  --ui-row-alt:         var(--brand-teal-800);
+  --ui-row-hover:       rgba(10, 207, 254, 0.10);
+}
+
+/* =========================================================================
+   UTILITY CLASSES — opt-in helpers used across preview cards and UI kits
+   ========================================================================= */
+
+.ds-sans { font-family: var(--font-sans); }
+
+/* Marketing type presets — only used on dark hero surfaces */
+.ds-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--brand-cyan-500);
+}
+.ds-display {
+  font-family: var(--font-sans);
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+.ds-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.ds-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+}
+.ds-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+}
+.ds-h4 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+}
+.ds-lead {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+  color: var(--neutral-300);
+}
+.ds-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-relaxed);
+}
+.ds-small {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  line-height: var(--lh-normal);
+}
+.ds-micro {
+  font-family: var(--font-sans);
+  font-size: var(--fs-micro);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--tracking-wide);
+}
