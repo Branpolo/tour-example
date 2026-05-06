@@ -193,18 +193,21 @@ function VariationC({ tour = true }) {
   const [showReport, setShowReport] = useStateC(false);
   // Tour keyframes for the original UI: rest → glide to row 1 → click → report → click back arrow → loop
   const TOUR_C_KEYFRAMES = [
-    { at: 0,    phase: "list",   target: { x: 6, y: 90 } },
-    { at: 700,  phase: "list",   target: { x: 24, y: 30 } },     // toward row 1 run-name cell
+    { at: 0,    phase: "list",   target: { x: 6, y: 90 },  caption: "view summary of all your runs and quickly find those that need attention" },
+    { at: 700,  phase: "list",   target: { x: 24, y: 30 }, caption: "select a run you want to review" },
     { at: 1100, phase: "list",   target: { x: 24, y: 30 }, click: true },
-    { at: 1500, phase: "report", target: { x: 24, y: 30 } },     // jump into report
+    { at: 1500, phase: "report", target: { x: 24, y: 30 }, caption: "review QC and other aspects of the run as required" },
     { at: 2400, phase: "report", target: { x: 56, y: 28 } },     // glide onto chart / floater
     { at: 4200, phase: "report", target: { x: 56, y: 28 } },     // dwell
     { at: 4800, phase: "report", target: { x: 8,  y: 9 } },      // glide to Run Files (back)
-    { at: 5200, phase: "list",   target: { x: 8,  y: 9 }, click: true },
+    { at: 5200, phase: "list",   target: { x: 8,  y: 9 }, click: true, caption: "view summary of all your runs and quickly find those that need attention" },
     { at: 5800, phase: "list",   target: { x: 8,  y: 9 } },
   ];
   const TOUR_C_DURATION = 5800;
   const tourState = window.useTourEngine(tourOn, TOUR_C_KEYFRAMES, TOUR_C_DURATION);
+  // Most-recent caption at the current tour time (sticks until the next captioned keyframe).
+  let tourCaption = "";
+  for (const k of TOUR_C_KEYFRAMES) { if (tourState.t >= k.at && k.caption) tourCaption = k.caption; }
 
   // Drive showReport from tour phase (always, even when paused, so ‹/› step changes screens)
   React.useEffect(() => {
@@ -216,6 +219,7 @@ function VariationC({ tour = true }) {
       <div style={{ position: "relative", width: 1440, height: 1340 }}>
         <window.VariationCReport onBack={() => setShowReport(false)}/>
         <window.TourCursor cursor={tourState.cursor} click={tourState.click && tourOn} clickAt={tourState.clickAt}/>
+        <TourCaption text={tourCaption}/>
         <window.TourPill on={tourOn} onToggle={() => setTourOn(v => !v)} onPrev={() => { setTourOn(false); tourState.prev(); }} onNext={() => { setTourOn(false); tourState.next(); }}/>
       </div>
     );
@@ -464,7 +468,26 @@ function VariationC({ tour = true }) {
         </div>
       </main>
       <window.TourCursor cursor={tourState.cursor} click={tourState.click && tourOn} clickAt={tourState.clickAt}/>
+      <TourCaption text={tourCaption}/>
       <window.TourPill on={tourOn} onToggle={() => setTourOn(v => !v)} onPrev={() => { setTourOn(false); tourState.prev(); }} onNext={() => { setTourOn(false); tourState.next(); }}/>
+    </div>
+  );
+}
+
+function TourCaption({ text }) {
+  return (
+    <div style={{
+      position: "absolute", left: "50%", bottom: 28, transform: "translateX(-50%)",
+      background: "rgba(2, 31, 44, 0.92)", color: "white",
+      padding: "10px 22px", borderRadius: 999,
+      fontSize: 14, fontWeight: 500, letterSpacing: "0.01em",
+      maxWidth: 760, textAlign: "center",
+      boxShadow: "0 6px 24px rgba(0,0,0,0.28)",
+      backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+      pointerEvents: "none", zIndex: 150,
+      opacity: text ? 1 : 0, transition: "opacity 200ms ease",
+    }}>
+      {text}
     </div>
   );
 }
